@@ -1,9 +1,19 @@
 import React, { useState, useEffect } from "react";
 import "../assets/css/layout.css";
-import { Link, NavLink } from "react-router-dom";
-import { Outlet } from "react-router-dom";
+import "../assets/css/userDropdown.css";
+import { Link, NavLink, useNavigate, Outlet } from "react-router-dom";
+import useAuth from '../hooks/useAuth';
 import ProfileDropdown from "../Componenets/ProfileDropdown";
+
 const Layout = () => {
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate('/signin');
+  };
+
   // State to track whether the sidebar is shown or not
   const [isSidebarShown, setIsSidebarShown] = useState(false);
 
@@ -37,6 +47,13 @@ const Layout = () => {
       document.removeEventListener("fullscreenchange", handleFullScreenChange);
     };
   }, []);
+
+  const [showUserDropdown, setShowUserDropdown] = useState(false);
+
+  const toggleUserDropdown = () => {
+    setShowUserDropdown(!showUserDropdown);
+  };
+
   return (
     <>
       <div className="d-flex position-relative">
@@ -144,6 +161,19 @@ const Layout = () => {
                   >
                     <i class="fa-solid fa-gears"></i>
                     <span>Setting</span>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    className=""
+                    style={({ isActive }) => ({
+                      textDecoration: "underline",
+                      color: isActive ? "white" : "#737791", // White if active, default otherwise
+                    })}
+                    to="/payment"
+                  >
+                    <i class="fa-solid fa-credit-card"></i>
+                    <span>Payment</span>
                   </NavLink>
                 </li>
               </ul>
@@ -255,17 +285,59 @@ const Layout = () => {
                       ></i>
                     </button>
                   </div>
-                  <div className="">
+                  <div className="position-relative">
                     <button
-                      type="button"
-                      class="btn btn-icon rounded-circle"
-                      data-toggle="fullscreen"
-                      fdprocessedid="nnzoac"
+                      className="profile-button"
+                      onClick={toggleUserDropdown}
+                      aria-label="User menu"
                     >
-                      <i class="fa-regular fa-bell"></i>
+                      <i className="far fa-user-circle"></i>
+                      <span className="status-indicator"></span>
+                    </button>
+                    {showUserDropdown && (
+                      <div className="user-dropdown">
+                        <div className="user-info p-3">
+                          <div className="user-header d-flex align-items-center gap-3 mb-1">
+                            <div className="user-avatar">
+                              {user?.fullName?.charAt(0).toUpperCase()}
+                            </div>
+                            <div className="user-details">
+                              <div className="user-name">{user?.fullName}</div>
+                              <div className="user-email">{user?.email}</div>
+                            </div>
+                          </div>
+                          <div className="user-actions">
+                            <button 
+                              className="dropdown-item"
+                              onClick={() => navigate('/profile')}
+                            >
+                              <i className="fas fa-user-circle"></i>
+                              My Profile
+                            </button>
+                            <button 
+                              className="dropdown-item"
+                              onClick={() => navigate('/settings')}
+                            >
+                              <i className="fas fa-sliders-h"></i>
+                              Settings
+                            </button>
+                            <button 
+                              className="dropdown-item"
+                              onClick={handleLogout}
+                            >
+                              <i className="fas fa-power-off"></i>
+                              Sign Out
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                  <div className="">
+                    <button className="btn-icon rounded-circle">
+                      <i className="fa-regular fa-bell"></i>
                     </button>
                   </div>
-                  <ProfileDropdown />
                 </div>
               </div>
             </div>
@@ -279,4 +351,5 @@ const Layout = () => {
     </>
   );
 };
+
 export default Layout;
