@@ -16,7 +16,8 @@ const corsOptions = {
         const allowedOrigins = [
             'http://localhost:5173',  // React development server
             'http://localhost:5000',  // Backend server
-            'http://127.0.0.1:3000'
+            'http://127.0.0.1:3000',
+            'https://construction-estimating.vercel.app',
         ];
         
         if (!origin || allowedOrigins.indexOf(origin) !== -1) {
