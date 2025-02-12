@@ -24,7 +24,7 @@ const PaymentForm = () => {
             const token = localStorage.getItem('token');
 
             // Create Payment Intent
-            const response = await fetch('http://localhost:5000/api/payments/create-payment-intent', {
+            const response = await fetch('https://feasibilitybackend.vercel.appss/api/payments/create-payment-intent', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ const PaymentForm = () => {
                 setProcessing(false);
             } else {
                 // Payment successful, confirm with backend
-                const confirmResponse = await fetch('http://localhost:5000/api/payments/confirm-payment', {
+                const confirmResponse = await fetch('https://feasibilitybackend.vercel.app/api/payments/confirm-payment', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
