@@ -13,12 +13,14 @@ import Settings from "./pages/Settings";
 import Threshold from "./pages/Threshold"
 import Blueprint from "./pages/Blueprint";
 import Payment from "./pages/Payment"; 
-import Profile from "./pages/Profile"; // added import statement
+import Profile from "./pages/Profile"; 
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Loader from "./Componenets/Loader";
 import ProtectedRoute from "./components/ProtectedRoute";
-
+import ErrorBoundary from './components/ErrorBoundary';
+import './assets/css/error.css';
+import './App.css';
 // Auth check function
 const isAuthenticated = () => {
   const token = localStorage.getItem('token');
@@ -84,7 +86,11 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <ErrorBoundary>
+      <RouterProvider router={router} />
+    </ErrorBoundary>
+  );
 }
 
 export default App;

@@ -17,6 +17,26 @@ const Layout = () => {
   // State to track whether the sidebar is shown or not
   const [isSidebarShown, setIsSidebarShown] = useState(false);
 
+  // Handle clicks outside sidebar
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      const sidebar = document.getElementById('side-bar');
+      const hamburger = document.getElementById('topnav-hamburger-icon');
+      
+      if (isSidebarShown && 
+          sidebar && 
+          !sidebar.contains(event.target) && 
+          !hamburger.contains(event.target)) {
+        setIsSidebarShown(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isSidebarShown]);
+
   // Toggle the sidebar visibility
   const toggleSidebar = () => {
     setIsSidebarShown(!isSidebarShown);

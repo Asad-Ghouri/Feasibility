@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import axios from 'axios'; // Import axios
 import '../assets/css/settings.css';
 
 const Settings = () => {
@@ -12,6 +13,19 @@ const Settings = () => {
         newPassword: '',
         confirmPassword: ''
     });
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
+
+    // Add state for second form
+    const [simplePassword, setSimplePassword] = useState({
+        current: '',
+        new: '',
+        confirm: ''
+    });
+    const [simpleError, setSimpleError] = useState('');
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -21,11 +35,37 @@ const Settings = () => {
         }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Add your password change logic here
-        console.log('Password change submitted:', formData);
+        setPasswordError('');
+
+        // Validate passwords match
+        if (formData.newPassword !== formData.confirmPassword) {
+            setPasswordError("New passwords don't match");
+            return;
+        }
+
+        try {
+            await axios.put('https://tyler-backend.vercel.app/api/auth/change-password', {
+                currentPassword: formData.currentPassword,
+                newPassword: formData.newPassword
+            }, {
+                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+            });
+
+            // Clear form on success
+            setFormData({
+                currentPassword: '',
+                newPassword: '',
+                confirmPassword: ''
+            });
+            setPasswordError('Password updated successfully');
+        } catch (err) {
+            setPasswordError(err.response?.data?.message || 'Password change failed');
+        }
     };
+
+   
 
     return (
         <div className="container">
@@ -107,11 +147,16 @@ const Settings = () => {
                             </div>
                         </div>
 
+                        {successMessage && <div className="success-message">{successMessage}</div>}
+                        {passwordError && <div className="error-message">{passwordError}</div>}
+
                         <button type="submit" className="change-password-button">
                             Change Password
                         </button>
                     </form>
                 </div>
+
+             
             </div>
         </div>
     );

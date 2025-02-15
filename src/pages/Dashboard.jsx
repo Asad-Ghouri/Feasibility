@@ -28,6 +28,40 @@ const formatRelativeTime = (timestamp) => {
 
 const Dashboard = () => {
   const [dashboardData, setDashboardData] = useState({
+    stats: [
+      {
+        icon: <FaProjectDiagram />,
+        title: "Total Projects",
+        value: "24",
+        trend: "+12%",
+        trendUp: true,
+        color: "rgba(59, 130, 246, 0.1)"
+      },
+      {
+        icon: <FaChartBar />,
+        title: "Activities",
+        value: "145",
+        trend: "+8%",
+        trendUp: true,
+        color: "rgba(52, 211, 153, 0.1)"
+      },
+      {
+        icon: <FaBell />,
+        title: "Alerts",
+        value: "5",
+        trend: "-2",
+        trendUp: false,
+        color: "rgba(239, 68, 68, 0.1)"
+      },
+      {
+        icon: <FaClipboardList />,
+        title: "Tasks",
+        value: "28",
+        trend: "+5",
+        trendUp: true,
+        color: "rgba(245, 158, 11, 0.1)"
+      }
+    ],
     projects: {
       heading: 'Projects',
       subheading: 'Active Project Management',
@@ -206,121 +240,62 @@ const Dashboard = () => {
   }, [activeSection]);
 
   return (
-    <div 
-      className="container"
-    >
-      {/* <div className="page-header">
-        <div>
-          <div className="breadcrumb">
-            <span>Dashboard</span>
-            <span>/</span>
-            <span>Estimate</span>
-          </div>
-          <h1 className="page-title">Estimate</h1>
-        </div>
-      </div> */}
-
-      <div className="content-section">
-        <div className="search-upload">
-          <input
-            type="text"
-            className="search-input"
-            placeholder="Search or upload contractor estimates"
-          />
-          <button className="upload-button">
-            UPLOAD
-          </button>
+    <div className="dashboard-container">
+      <div className="dashboard-grid">
+        {/* Stats Cards */}
+        <div className="row g-3">
+          {dashboardData.stats.map((stat, index) => (
+            <div key={index} className="col-12 col-md-6 col-lg-3">
+              <Card
+                icon={stat.icon}
+                title={stat.title}
+                value={stat.value}
+                trend={stat.trend}
+                trendUp={stat.trendUp}
+                color={stat.color}
+              />
+            </div>
+          ))}
         </div>
 
-        <div className="section-header">
-          <h2 className="section-title">Estimate Comparisons</h2>
-        </div>
-
-        <div className="table-container">
-          <table className="comparison-table">
-            <thead>
-              <tr>
-                <th>Contractor</th>
-                <th>Estimate</th>
-                <th>Market Value</th>
-                <th>Discrepancy</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Contractor A</td>
-                <td>$10,000</td>
-                <td>$10,000</td>
-                <td><span className="status status-success">NO DISCREPANCY</span></td>
-              </tr>
-              <tr>
-                <td>Contractor B</td>
-                <td>$12,000</td>
-                <td>$11,500</td>
-                <td><span className="status status-warning">MINOR DISCREPANCY</span></td>
-              </tr>
-              <tr>
-                <td>Contractor C</td>
-                <td>$15,000</td>
-                <td>$10,000</td>
-                <td><span className="status status-error">MAJOR DISCREPANCY</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <section className="section1 sec1-cards">
-        <div className="container-fluid px-5">
-          <div className="row no-gutters justify-content-center">
-            {renderCardData(dashboardData.projects)}
-            {renderCardData(dashboardData.analysis)}
-            {renderCardData(dashboardData.alerts)}
-          </div>
-        </div>
-      </section>
-
-      <section className="Dashsection2">
-        <div className="container">
-          <div className="row">
-            <div className="col-12 col-md-12 col-xl-8">
-              <div>
+        {/* Charts Section */}
+        <div className="row g-3 mt-3 d-n">
+          <div className="col-12 col-lg-8">
+            <div className="chart-container p-3 bg-white rounded">
+              <h5 className="mb-3">Project Progress</h5>
+              <div className="chart-scroll-container">
                 <BarChart props={aspectsData} />
               </div>
-              <div>
-                <div className="recent-activites">
-                  <RecentActivity recentAct={recentActivities} />
-                </div>
-              </div>
             </div>
-            <div className="col-12 col-md-12 col-xl-4">
-              <div>
-                <CircleChart data={costData} />
-              </div>
-              <div>
-                <div className="Compare">
-                  <div className="ConvMarmain">
-                    <div className="ConvMar-heading">
-                      <h3>Contractor Estimate vs Market Value</h3>
-                    </div>
-                    <div className="dotConvMar">
-                      <div className="conEs">
-                        <span className="dot dot-1"></span> Contractor Estimates
-                      </div>
-                      <div className="marVal">
-                        <span className="dot dot-2"></span> Market Value
-                      </div>
-                    </div>
-                    <div className="ConvMarImg">
-                      <img src="/img/Chart-image.png" alt="Estimate Comparison Chart" />
-                    </div>
-                  </div>
-                </div>
+          </div>
+          
+          <div className="col-12 col-lg-4">
+            <div className="chart-container p-3 bg-white rounded">
+              <h5 className="mb-3">Task Distribution</h5>
+              <CircleChart data={costData} />
+            </div>
+          </div>
+        </div>
+
+        {/* Recent Activity Section */}
+        <div className="row mt-3">
+          <div className="col-12">
+            <div className="recent-activity-container p-3 bg-white rounded">
+              <h5 className="mb-3">Recent Activity</h5>
+              <div className="activity-scroll-container">
+                <RecentActivity recentAct={recentActivities} />
               </div>
             </div>
           </div>
         </div>
-      </section>
+
+        {/* Cards Section */}
+        <div className="row g-3 mt-3">
+          {renderCardData(dashboardData.projects)}
+          {renderCardData(dashboardData.analysis)}
+          {renderCardData(dashboardData.alerts)}
+        </div>
+      </div>
     </div>
   );
 };
