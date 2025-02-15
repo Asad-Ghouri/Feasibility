@@ -18,6 +18,8 @@ const SignIn = () => {
       ...formData,
       [name]: type === 'checkbox' ? checked : value
     });
+    // Clear error when user starts typing
+    if (error) setError('');
   };
 
   const validateForm = () => {
@@ -52,7 +54,7 @@ const SignIn = () => {
     }
 
     try {
-      const response = await fetch('https://feasibilitybackend.vercel.app/api/auth/signin', {
+      const response = await fetch('https://tyler-backend.vercel.app/api/auth/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +69,7 @@ const SignIn = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.details || 'Signin failed');
+        throw new Error(data.error || 'Invalid email or password');
       }
 
       // Store the token and user data in localStorage
@@ -98,14 +100,14 @@ const SignIn = () => {
       <div className="auth-card">
         <div className="auth-header">
           <h2>Welcome Back</h2>
-          <p>Sign in to continue</p>
+          <p>Sign in to continue to your account</p>
         </div>
         
         {error && <div className="auth-error">{error}</div>}
         
         <form onSubmit={handleSubmit} className="auth-form">
           <div className="form-group">
-            <label htmlFor="email">Email</label>
+            <label htmlFor="email">Email Address</label>
             <input
               type="email"
               id="email"
@@ -113,11 +115,11 @@ const SignIn = () => {
               value={formData.email}
               onChange={handleChange}
               placeholder="Enter your email"
-              required
               disabled={isLoading}
+              autoComplete="email"
             />
           </div>
-          
+
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
@@ -127,12 +129,12 @@ const SignIn = () => {
               value={formData.password}
               onChange={handleChange}
               placeholder="Enter your password"
-              required
               disabled={isLoading}
+              autoComplete="current-password"
             />
           </div>
-          
-          <div className="form-group remember-forgot">
+
+          <div className="remember-forgot">
             <div className="remember-me">
               <input
                 type="checkbox"
@@ -144,28 +146,19 @@ const SignIn = () => {
               />
               <label htmlFor="rememberMe">Remember me</label>
             </div>
-            
             <Link to="/forgot-password" className="forgot-password">
               Forgot Password?
             </Link>
           </div>
-          
-          <button 
-            type="submit" 
-            className="auth-button" 
-            disabled={isLoading}
-          >
-            {isLoading ? 'Signing In...' : 'Sign In'}
+
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
-        
+
         <div className="auth-footer">
-          <p>
-            Don't have an account?{' '}
-            <Link to="/signup" className="auth-link">
-              Sign Up
-            </Link>
-          </p>
+          Don't have an account?
+          <Link to="/signup">Sign up now</Link>
         </div>
       </div>
     </div>

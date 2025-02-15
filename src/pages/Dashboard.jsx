@@ -207,8 +207,69 @@ const Dashboard = () => {
 
   return (
     <div 
-      className="dashboard-container"
+      className="container"
     >
+      {/* <div className="page-header">
+        <div>
+          <div className="breadcrumb">
+            <span>Dashboard</span>
+            <span>/</span>
+            <span>Estimate</span>
+          </div>
+          <h1 className="page-title">Estimate</h1>
+        </div>
+      </div> */}
+
+      <div className="content-section">
+        <div className="search-upload">
+          <input
+            type="text"
+            className="search-input"
+            placeholder="Search or upload contractor estimates"
+          />
+          <button className="upload-button">
+            UPLOAD
+          </button>
+        </div>
+
+        <div className="section-header">
+          <h2 className="section-title">Estimate Comparisons</h2>
+        </div>
+
+        <div className="table-container">
+          <table className="comparison-table">
+            <thead>
+              <tr>
+                <th>Contractor</th>
+                <th>Estimate</th>
+                <th>Market Value</th>
+                <th>Discrepancy</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Contractor A</td>
+                <td>$10,000</td>
+                <td>$10,000</td>
+                <td><span className="status status-success">NO DISCREPANCY</span></td>
+              </tr>
+              <tr>
+                <td>Contractor B</td>
+                <td>$12,000</td>
+                <td>$11,500</td>
+                <td><span className="status status-warning">MINOR DISCREPANCY</span></td>
+              </tr>
+              <tr>
+                <td>Contractor C</td>
+                <td>$15,000</td>
+                <td>$10,000</td>
+                <td><span className="status status-error">MAJOR DISCREPANCY</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <section className="section1 sec1-cards">
         <div className="container-fluid px-5">
           <div className="row no-gutters justify-content-center">

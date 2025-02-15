@@ -12,7 +12,8 @@ import Estimate from "./pages/Estimate";
 import Settings from "./pages/Settings";
 import Threshold from "./pages/Threshold"
 import Blueprint from "./pages/Blueprint";
-import Payment from "./pages/Payment"; // added import statement
+import Payment from "./pages/Payment"; 
+import Profile from "./pages/Profile"; // added import statement
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Loader from "./Componenets/Loader";
@@ -69,6 +70,10 @@ const router = createBrowserRouter([
       { 
         path:"/Threshold",
         element: <Threshold/>
+      },
+      {
+        path:"/Profile",
+        element: <Profile/>,
       }
     ],
   },

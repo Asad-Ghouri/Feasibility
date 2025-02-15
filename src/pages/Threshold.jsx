@@ -1,6 +1,5 @@
 import React, { useState, useCallback, useMemo } from 'react';
 import '../assets/css/threshold.css';
-import Breadcrums from '../Componenets/Breadcrums';
 
 const Threshold = () => {
   const [thresholdData, setThresholdData] = useState({
@@ -77,51 +76,45 @@ const Threshold = () => {
   ], []);
 
   return (
-    <div className="threshold-container">
-      <div className="threshold-header">
-        <div className="threshold-title">
-          <Breadcrums name="Customer Threshold" />
+    <div className="container">
+      <div className="content-section">
+        <div className="section-header">
+          <h2 className="section-title">Define Precision Thresholds</h2>
         </div>
-      </div>
 
-      <h2 className="threshold-subtitle">
-        Define Precision Thresholds
-      </h2>
-
-      <div className="threshold-options">
-        {thresholdFields.map(({ name, label, placeholder }) => (
-          <div key={name} className="threshold-option">
-            <div className="threshold-option-title">
-              {label}
-            </div>
-            <input 
-              type="number" 
-              name={name}
-              step="0.01"
-              min="0"
-              max="100"
-              className={`threshold-input ${validationErrors[name] ? 'is-invalid' : ''}`}
-              placeholder={placeholder}
-              value={thresholdData[name]}
-              onChange={handleInputChange}
-              required
-            />
-            {validationErrors[name] && (
-              <div className="validation-error">
-                {validationErrors[name]}
+        <div className="threshold-options">
+          {thresholdFields.map(({ name, label, placeholder }) => (
+            <div key={name} className="threshold-option">
+              <div className="threshold-option-title">
+                {label}
               </div>
-            )}
-          </div>
-        ))}
-      </div>
+              <input 
+                type="number" 
+                name={name}
+                step="0.01"
+                min="0"
+                max="100"
+                value={thresholdData[name]}
+                onChange={handleInputChange}
+                placeholder={placeholder}
+                className={validationErrors[name] ? 'error' : ''}
+              />
+              {validationErrors[name] && (
+                <div className="error">{validationErrors[name]}</div>
+              )}
+            </div>
+          ))}
 
-      <div className="threshold-actions">
-        <button 
-          className="analyze-button"
-          onClick={handleAnalyze}
-        >
-          Analyze Thresholds
-        </button>
+          <div className="threshold-actions">
+            <button 
+              className="analyze-button"
+              onClick={handleAnalyze}
+              disabled={Object.keys(validationErrors).length > 0}
+            >
+              Analyze Thresholds
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

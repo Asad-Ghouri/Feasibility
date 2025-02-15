@@ -32,11 +32,11 @@ const SignUp = () => {
       return false;
     }
 
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
-    if (!passwordRegex.test(formData.password)) {
-      setError('Password must contain at least one uppercase letter, one lowercase letter, and one number');
-      return false;
-    }
+    // const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+    // if (!passwordRegex.test(formData.password)) {
+    //   setError('Password must contain at least one uppercase letter, one lowercase letter, and one number');
+    //   return false;
+    // }
 
     return true;
   };
@@ -52,7 +52,7 @@ const SignUp = () => {
     }
 
     try {
-      const response = await fetch('https://feasibilitybackend.vercel.app/api/auth/signup', {
+      const response = await fetch('https://tyler-backend.vercel.app/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
