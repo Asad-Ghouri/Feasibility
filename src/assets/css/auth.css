@@ -190,16 +190,59 @@ button[type="submit"]:disabled {
   color: var(--osmn-link-color-hover);
 }
 
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .auth-card {
+    padding: 32px;
+  }
+
+  .auth-header h2 {
+    font-size: 28px;
+  }
+
+  .auth-header p {
+    font-size: 14px;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="password"] {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+
+  button[type="submit"] {
+    padding: 12px;
+    font-size: 15px;
+  }
+}
+
 @media (max-width: 576px) {
   .auth-card {
     padding: 24px;
   }
-  
+
   .auth-header h2 {
     font-size: 24px;
   }
-  
+
+  .auth-header p {
+    font-size: 13px;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="password"] {
+    padding: 10px 14px;
+    font-size: 13px;
+  }
+
   button[type="submit"] {
-    padding: 12px;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .auth-footer {
+    font-size: 13px;
   }
 }

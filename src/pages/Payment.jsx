@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/payment.css';
 
-const stripePromise = loadStripe('pk_test_51ODucNSBUBnZdF2vvqkzN3NNnk6fVKEwo9wMv2Sf0MBzJh3Pyq962aLfPM1AG0xVP7RyooZ4V7cIvD7XY2GZXuiO00gm3QoSIW');
+const stripePromise = loadStripe('pk_test_51Oo1OvCHBkwAjDwQDCp4EwRTAnDlzvXl7obKllBYH7VsBfNaEM6k5PkRhlk0AFw8d9yhJFWhY7izcIMrDDNTij2T00iJAdjzhQ');
 
 const CARD_ELEMENT_OPTIONS = {
     style: {
@@ -100,7 +100,7 @@ const PaymentForm = () => {
         try {
             // Create payment intent
             const { data: { clientSecret } } = await axios.post(
-                'https://tyler-backend.vercel.app/api/payments/create-payment-intent',
+                'http://localhost:5000/api/payments/create-payment-intent',
                 {
                     amount: parseFloat(formData.amount),
                     customer: {

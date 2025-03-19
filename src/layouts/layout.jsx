@@ -213,14 +213,17 @@ const Layout = () => {
                       class=""
                       id="topnav-hamburger-icon"
                     >
-                      <span class="hamburger-icon ">
+                      <span class={`hamburger-icon ${isSidebarShown ? "open" : ""}`}>
                         <span></span>
                         <span></span>
                         <span></span>
                       </span>
+                      
                     </button>
+                    
                   </div>
-                  <div className="logo-wrap-sm nav-sm-logo">
+                  {/* logo for mobile screen */}
+                  {/* <div className="logo-wrap-sm nav-sm-logo">
                     <Link to="/">
                       <div>
                         <img
@@ -238,7 +241,7 @@ const Layout = () => {
                         alt="logo"
                       />
                     </Link>
-                  </div>
+                  </div> */}
                 </div>
               </div>
               <div className="col-8 col-lg-12">
@@ -255,17 +258,20 @@ const Layout = () => {
                             class="form-control"
                             placeholder="Search"
                           />
+                          <div className="focus-sec">
                           <button class="s-btn" type="submit">
                             <i class="fa-solid fa-magnifying-glass"></i>
                           </button>
+                          </div>
                         </div>
                       </form>
                     </div>
                   </div>
                   <div class="">
+                    <div className="flag-sec">
                     <button
                       type="button"
-                      class="btn flag btn-icon rounded-circle"
+                      class="btn  flag btn-icon rounded-circle"
                     >
                       <img
                         id="header-lang-img"
@@ -275,6 +281,7 @@ const Layout = () => {
                         class="rounded"
                       />
                     </button>
+                    </div>
                     <div class="dropdown-menu-ww">
                       {/* <!-- item--> */}
                       {/* <a href="javascript:void(0);" class="dropdown-item notify-item language py-2" data-lang="en" title="English" contenteditable="false">

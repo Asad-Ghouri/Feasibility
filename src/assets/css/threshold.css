@@ -40,6 +40,7 @@
     width: 100%;
     max-width: 1440px;
     margin: 0 auto;
+    padding: var(--spacing-md);
 }
 
 .content-section {
@@ -153,6 +154,7 @@
     cursor: not-allowed;
 }
 
+/* Responsive Adjustments */
 @media (max-width: 1024px) {
     .threshold-options {
         grid-template-columns: repeat(2, 1fr);
@@ -167,13 +169,54 @@
     .content-section {
         padding: var(--spacing-md);
     }
-}
 
-@media (max-width: 480px) {
     .section-header {
         flex-direction: column;
         align-items: flex-start;
         gap: var(--spacing-sm);
+    }
+
+    .threshold-option {
+        padding: var(--spacing-sm);
+    }
+
+    .threshold-option-title {
+        font-size: 0.875rem;
+    }
+
+    .threshold-option input {
+        font-size: 0.75rem;
+    }
+
+    .analyze-button {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .threshold-container {
+        padding: var(--spacing-sm);
+    }
+
+    .content-section {
+        padding: var(--spacing-sm);
+    }
+
+    .section-title {
+        font-size: 1rem;
+    }
+
+    .threshold-option-title {
+        font-size: 0.75rem;
+    }
+
+    .threshold-option input {
+        font-size: 0.6875rem;
+    }
+
+    .analyze-button {
+        font-size: 0.75rem;
     }
 }
 
