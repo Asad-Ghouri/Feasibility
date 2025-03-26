@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../assets/css/payment.css';
 
-const stripePromise = loadStripe('pk_test_51Oo1OvCHBkwAjDwQDCp4EwRTAnDlzvXl7obKllBYH7VsBfNaEM6k5PkRhlk0AFw8d9yhJFWhY7izcIMrDDNTij2T00iJAdjzhQ');
+const stripePromise = loadStripe('pk_test_51NWncHB7S6nOH9ha2cIsYHSYgyHOMzf5sSbGEAcOtJ4mGq62OEldeA63pBgW9UhaDu6ECYIpYqMMBX0s7ewzZ4bv00NeXtT0Ya');
 
 const CARD_ELEMENT_OPTIONS = {
     style: {
@@ -28,7 +28,6 @@ const PaymentForm = () => {
     const elements = useElements();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
-        amount: '',
         fullName: '',
         email: '',
         phone: '',
@@ -41,6 +40,12 @@ const PaymentForm = () => {
     const [isProcessing, setIsProcessing] = useState(false);
     const [error, setError] = useState(null);
     const [paymentSuccess, setPaymentSuccess] = useState(false);
+    const [priceDetails, setPriceDetails] = useState({
+        amount: 0,
+        currency: 'USD',
+        productName: ''
+    });
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         // Check if user is authenticated
@@ -48,7 +53,28 @@ const PaymentForm = () => {
         if (!token) {
             setError('Please log in to make a payment');
             navigate('/login');
+            return;
         }
+
+        // Fetch price details from backend
+        const fetchPriceDetails = async () => {
+            try {
+                const response = await axios.get('http://localhost:5000/api/payments/price-details', {
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                setPriceDetails(response.data);
+            } catch (err) {
+                console.error('Failed to fetch price details:', err);
+                setError('Failed to load payment details. Please try again.');
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchPriceDetails();
     }, [navigate]);
 
     const handleInputChange = (e) => {
@@ -60,10 +86,6 @@ const PaymentForm = () => {
     };
 
     const validateForm = () => {
-        if (!formData.amount || isNaN(formData.amount)) {
-            setError('Please enter a valid amount');
-            return false;
-        }
         if (!formData.fullName || !formData.email) {
             setError('Name and email are required');
             return false;
@@ -102,7 +124,6 @@ const PaymentForm = () => {
             const { data: { clientSecret } } = await axios.post(
                 'http://localhost:5000/api/payments/create-payment-intent',
                 {
-                    amount: parseFloat(formData.amount),
                     customer: {
                         name: formData.fullName,
                         email: formData.email,
@@ -152,7 +173,6 @@ const PaymentForm = () => {
                 setPaymentSuccess(true);
                 // Reset form
                 setFormData({
-                    amount: '',
                     fullName: '',
                     email: '',
                     phone: '',
@@ -202,21 +222,26 @@ const PaymentForm = () => {
         );
     }
 
+    if (isLoading) {
+        return (
+            <div className="payment-container">
+                <div className="content-section">
+                    <div className="loading-container">
+                        <div className="loading-spinner"></div>
+                        <p>Loading payment details...</p>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <form onSubmit={handleSubmit} className="payment-form">
             <div className="amount-section">
-                <label htmlFor="amount">Amount (INR)</label>
-                <input
-                    type="number"
-                    id="amount"
-                    name="amount"
-                    value={formData.amount}
-                    onChange={handleInputChange}
-                    placeholder="Enter amount"
-                    min="0.01"
-                    step="0.01"
-                    required
-                />
+                <h3 className="product-name">{priceDetails.productName}</h3>
+                <div className="price-display">
+                    Amount: {priceDetails.currency.toUpperCase()} {(priceDetails.amount / 100).toFixed(2)}
+                </div>
             </div>
 
             <div className="billing-details">
@@ -339,7 +364,7 @@ const PaymentForm = () => {
                 disabled={isProcessing || !stripe}
                 className="submit-button"
             >
-                {isProcessing ? 'Processing...' : `Pay ₹${formData.amount || '0.00'}`}
+                {isProcessing ? 'Processing...' : `Pay ${priceDetails.currency.toUpperCase()} ${(priceDetails.amount / 100).toFixed(2)}`}
             </button>
         </form>
     );

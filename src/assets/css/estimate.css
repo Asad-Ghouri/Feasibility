@@ -283,6 +283,28 @@
         width: 100%;
         padding: 0.75rem 1rem;
     }
+    .files-list{
+        padding: 1rem;
+    }
+
+    .file-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .file-item input {
+        width: 100%;
+        margin-right: 0;
+    }
+
+    .file-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+
+
 }
 
 @media (max-width: 480px) {
@@ -305,6 +327,22 @@
     .action-button {
         font-size: 0.875rem;
     }
+
+    .file-item input {
+        font-size: 0.875rem;
+    }
+
+    .file-actions button {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    .file-actions a.view-button {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+    }
+
+
 }
 
 /* Animations */
@@ -476,7 +514,46 @@
     }
 }
 
+/* Additional Adjustments for Very Small Screens */
+@media (max-width: 320px) {
+    .estimate-title {
+        font-size: 1rem;
+    }
 
+    .upload-input {
+        font-size: 0.75rem;
+    }
+
+    .comparison-header h3 {
+        font-size: 0.875rem;
+    }
+
+    .actions-header h3 {
+        font-size: 0.875rem;
+    }
+
+    .action-button {
+        font-size: 0.75rem;
+    }
+
+    .file-item span {
+        font-size: 0.75rem;
+    }
+
+    .file-item input {
+        font-size: 0.75rem;
+    }
+
+    .file-actions button {
+        padding: 0.5rem;
+        font-size: 0.625rem;
+    }
+
+    .file-actions a.view-button {
+        padding: 0.5rem;
+        font-size: 0.625rem;
+    }
+}
 /* Edit File Section */
 .edit-file-section {
     display: flex;
