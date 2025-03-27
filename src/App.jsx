@@ -16,6 +16,7 @@ import Payment from "./pages/Payment";
 import Profile from "./pages/Profile"; 
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
+import ForgetPassword from "./pages/ForgetPassword";
 import Loader from "./Componenets/Loader";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ErrorBoundary from './components/ErrorBoundary';
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignUp />,
+  },
+  {
+    path: "/forgot-password",
+    element: <ForgetPassword/>
   },
   {
     path: "/",

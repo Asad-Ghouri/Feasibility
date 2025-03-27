@@ -89,7 +89,7 @@
 /* Profile Button Styles */
 .profile-button {
     position: relative;
-    padding: 8px;
+    padding: 9px;
     border-radius: 12px;
     background: linear-gradient(to right, #f8f9fa, #ffffff);
     border: 1px solid rgba(0, 0, 0, 0.05);
@@ -123,4 +123,12 @@
     background-color: #05CD99;
     border-radius: 50%;
     border: 2px solid #ffffff;
+}
+@media (max-width:768px) {
+    .profile-button{
+        /* margin-left: 5px; */
+        position: relative;
+        padding: 9px;
+        border-radius: 12px;
+    }
 }

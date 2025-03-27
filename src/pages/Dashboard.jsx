@@ -290,7 +290,7 @@ const Dashboard = () => {
         </div>
 
         {/* Cards Section */}
-        <div className="row g-3 mt-3">
+        <div className="row g-3 mt-3 section-container">
           {renderCardData(dashboardData.projects)}
           {renderCardData(dashboardData.analysis)}
           {renderCardData(dashboardData.alerts)}

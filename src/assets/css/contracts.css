@@ -218,9 +218,24 @@
     font-style: italic;
 }
 
+/* Responsive Design */
 @media (max-width: 768px) {
+    .contracts-container {
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    .contracts-header {
+        padding: 1rem;
+    }
+
+    .contracts-title {
+        font-size: 1.5rem;
+    }
+
     .upload-section {
         flex-direction: column;
+        padding: 1rem;
     }
 
     .upload-input {
@@ -229,8 +244,50 @@
         margin-bottom: 1rem;
     }
 
+    .upload-button {
+        width: 100%;
+        padding: 0.75rem 1rem;
+    }
+
+    .flagged-section, .comparison-section {
+        padding: 1rem;
+    }
+
+    .flagged-row ul {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        padding: 0.5rem;
+    }
+
     .comparison-containers {
         grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .contracts-title {
+        font-size: 1.25rem;
+    }
+
+    .upload-input {
+        font-size: 0.875rem;
+    }
+
+    .flagged-header h3, .comparison-header h3 {
+        font-size: 1rem;
+    }
+
+    .issue-tag {
+        font-size: 0.75rem;
+    }
+
+    .comparison-container-header {
+        padding: 0.75rem 1rem;
+    }
+
+    .comparison-container-content {
+        padding: 1rem;
     }
 }
 
